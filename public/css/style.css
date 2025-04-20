@@ -1,4 +1,4 @@
-/* login style */
+/* all page style */
 .body-login-register {
 	display: flex;
 	justify-content: center;
@@ -6,6 +6,10 @@
 	flex-direction: column;
 	background: linear-gradient(90deg, rgb(34, 255, 0), rgb(0, 83, 11));
 	background-size: contain;
+
+	width: 99%;
+
+	position: relative;
 }
 
 .continer-login-register {
@@ -52,4 +56,45 @@
 
 	background-color: rgba(250, 235, 215, 0);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* dashboard style */
+header {
+	/* width: 100%; */
+	background-color: black;
+	color: white;
+
+	display: block;
+	position: absolute;
+	top: -90px;
+	right: 0;
+	left: 0;
+
+	padding: 10px 15px;
+}
+
+header div {
+	padding: 10px 15px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+
+	border: red solid;
+
+}
+
+.wel {
+	width: 100%;
+	/* border: red solid; */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.519);
+	margin-top: 10px;
+	border-radius: 8px;
+
+	display: flex;
+	justify-content: center;
+	font-size: 25px;
+}
+
+.data {
+	display: none;	
 }

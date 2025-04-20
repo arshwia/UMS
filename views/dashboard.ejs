@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('partials/header') %>
+
+<body class="body-login-register" style="margin-top: 95px;">
+
+	<header>
+		<div>
+			<button id="userdata">/*</button>
+			<div>Welcome <%= username %></div>
+			<button ?>=></button>
+		</div>
+	</header>
+
+	<nav class="wel" id="wel">
+		<p>Welcome <%= username %></p>
+	</nav>
+
+	<nav class="data" id="data">
+		<h1>yuor gmail : <u><%= gmail %></u></h1>
+		<h1>yuor username : <u><%= username %></u></h1>
+		<h1>yuor pas : <u><%= pas %></u></h1>
+	</nav>
+    
+	<%- include('partials/footer') %>
+
+	<script>
+		const userdataBut = document.querySelector("#userdata")
+		const wel = document.querySelector("#wel")
+		const data = document.querySelector("#data")
+
+		userdataBut.addEventListener("click", (e) => {
+			if (wel.style.display === "none") {
+				wel.style.display = "flex"
+				data.style.display = "none"
+			} else {
+				wel.style.display = "none"
+				data.style.display = "block"
+			}
+			
+			e.preventDefault()
+		})
+	</script>
+</body>
+
+</html>
