@@ -3,21 +3,23 @@
 
 <%- include('partials/header') %>
 
-<body>
-    <h1>Register Page</h1>
-    <form action="/register" method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email" required /><br><br>
+<body class="body-login-register">
+    <div class="continer-login-register">
+        <h1>Register Page</h1>
+        <form action="/register" method="POST">
+            <label>Email:</label><br>
+            <input type="email" name="email" required /><br><br>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required /><br><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" required /><br><br>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">R e g i s t e r</button>
+        </form>
+    </div>
 
     <p>Already have an account? <a href="/login">Login</a></p>
 
-    <%- include('partials/footr') %>
+    <%- include('partials/footer') %>
 </body>
 
 </html>

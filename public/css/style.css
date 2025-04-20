@@ -1,5 +1,5 @@
 /* login style */
-.body-login{
+.body-login-register {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -8,15 +8,15 @@
 	background-size: contain;
 }
 
-.continer-login {
+.continer-login-register {
 	padding: 20px 40px;
 }
 
-.continer-login h1 {
+.continer-login-register h1 {
 	font-size: 60px;
 }
 
-.continer-login form input {
+.continer-login-register form input {
 	width: 370px;
 	height: 50px;
 	border-radius: 50px;
@@ -30,19 +30,19 @@
 	font-size: 18px;
 }
 
-.continer-login form input:focus, .continer-login form input:focus-visible {
+.continer-login-register form input:focus, .continer-login form input:focus-visible {
 	background-color: rgba(255, 0, 0, 0);
 	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 	border: none !important;
 }
 
-.continer-login form label {
+.continer-login-register form label {
 	margin-bottom: 10px;
 	font-size: 20px;
 	color: rgb(36, 36, 36);
 }
 
-.continer-login form button {
+.continer-login-register form button {
 	width: 100%;
 	margin-top: 20px;
 	height: 45px;

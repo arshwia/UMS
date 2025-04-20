@@ -23,5 +23,13 @@ app.use(morgan("dev"));
 app.listen(3000)
 
 app.get("/", (req, res) => {
+	res.redirect("/login")
+})
+
+app.get("/register", (req, res) => {
+	res.render("register", { title: "register" })
+})
+
+app.get("/login", (req, res) => {
 	res.render("login", { title: "login" })
 })
