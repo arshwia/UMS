@@ -3,17 +3,19 @@
 
 <%- include('partials/header') %>
 
-<body>
-    <h1>Login Page</h1>
-    <form action="/login" method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email" required /><br><br>
+<body class="body-login">
+    <div class="continer-login">
+        <h1>Login Page</h1>
+        <form action="/login" method="POST">
+            <label>Email:</label><br>
+            <input type="email" name="email" required /><br><br>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required /><br><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" required /><br><br>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">L o g i n</button>
+        </form>
+    </div>
 
     <p>Don't have an account? <a href="/register">Register</a></p>
 
