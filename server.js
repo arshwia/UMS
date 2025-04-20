@@ -3,12 +3,20 @@ const path = require('path');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const { title } = require('process');
-const Person = require('./models/person'); 
+const Person = require('./models/person');
+const session = require('express-session');
 
 const dbURI = "mongodb+srv://arshia:arshia1234@cluster0.wnrotdp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0"
 
 const app = express();
-app.use(express.urlencoded({ extended: true })); 
+
+app.use(session({
+	secret: 'your-secret-key', // یه متن رمز شده دلخواه
+	resave: false,
+	saveUninitialized: true
+}));
+
+app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
@@ -19,15 +27,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 mongoose.connect(dbURI)
-    .then(() => {
-        console.log("Connected to DB");
-        app.listen(3000, () => {
-            console.log("Server running on port 3000");
-        });
-    })
-    .catch((err) => console.log(err));
-
-app.listen(3000)
+	.then(() => {
+		console.log("Connected to DB");
+		app.listen(3000, () => {
+			console.log("Server running on port 3000");
+		});
+	})
+	.catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
 	res.redirect("/login")
@@ -38,25 +44,43 @@ app.get("/register", (req, res) => {
 })
 app.post('/register', async (req, res) => {
 	const { email, password } = req.body;
-  
+
 	try {
-	  const person = new Person({ email, password }); // مدلت این باشه
-	  await person.save();
-	  res.redirect('/login');
+		const person = new Person({ email, password }); // مدلت این باشه
+		await person.save();
+		res.redirect('/login');
 	} catch (err) {
-	  console.log(err);
-	  res.status(500).send("خطا در ثبت‌نام");
+		console.log(err);
+		res.status(500).send("خطا در ثبت‌نام");
 	}
-  });
-  
+});
+
 
 app.get("/login", (req, res) => {
 	res.render("login", { title: "login" })
 })
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
 	const { email, password } = req.body;
-	console.log('Email:', email);
-	console.log('Password:', password);
 
-	res.send("Login received!");
+	try {
+		const user = await Person.findOne({ email, password });
+		if (user) {
+			req.session.user = user;
+			res.redirect('/dashboard');
+		} else {
+			res.send("ایمیل یا رمز اشتباهه");
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).send("500");
+	}
 });
+
+app.get('/dashboard', (req, res) => {
+	if (!req.session.user) {
+		return res.redirect('/login');
+	}
+
+	res.render('dashboard', { title: 'dashboard', user: req.session.user });
+});
+
