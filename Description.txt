@@ -1,0 +1,5 @@
+سلام من عرشیام دارم نود تمرین میکنم و این یکی از تمریناتم هست
+و هم زمان تمرین گیت هم هست ولی فعلا دارم با گیت دکستاپ کار میکنم
+
+Hello, I am Arshiam, I am practicing Node and this is one of my exercises.
+I am also practicing Git, but I am currently working with Git Desktop.
