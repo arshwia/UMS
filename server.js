@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const { title } = require('process');
 const Person = require('./models/person');
 const session = require('express-session');
+const upload = require('./middleware/upload');
 
 const dbURI = "mongodb+srv://arshia:arshia1234@cluster0.wnrotdp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0"
 
@@ -21,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,13 +45,12 @@ app.get("/", (req, res) => {
 app.get("/register", (req, res) => {
 	res.render("register", { title: "register" })
 })
-app.post('/register', async (req, res) => {
+app.post('/register', upload.single('avatar'), async (req, res) => {
 	const { email, password } = req.body;
-
-	const avatar = req.file.filename;
+	const avatar = req.file ? req.file.filename : null;
 
 	try {
-		const person = new Person({ email, password }); // مدلت این باشه
+		const person = new Person({ email, password, avatar });
 		await person.save();
 		res.redirect('/login');
 	} catch (err) {
@@ -56,6 +58,8 @@ app.post('/register', async (req, res) => {
 		res.status(500).send("خطا در ثبت‌نام");
 	}
 });
+
+
 
 
 app.get("/login", (req, res) => {
@@ -79,10 +83,11 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
+	const user = req.session.user
 	if (!req.session.user) {
 		return res.redirect('/login');
 	}
 
-	res.render('dashboard', { title: 'dashboard', user: req.session.user });
+	res.render('dashboard', { title: 'dashboard', user });
 });
 

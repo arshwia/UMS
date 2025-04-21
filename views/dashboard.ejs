@@ -20,6 +20,12 @@
 	<nav class="data" id="data">
 		<h1>yuor gmail : <u><%= user.email %></u></h1>
 		<h1>yuor pas : <u><%= user.password %></u></h1>
+
+		<% if (user.avatar) { %>
+			<img src="/uploads/<%= user.avatar %>" alt="poro" width="250" style="border-radius: 50%;">
+		<% } else { %>
+			<p>no poro</p>
+		<% } %>
 	</nav>
     
 	<%- include('partials/footer') %>
