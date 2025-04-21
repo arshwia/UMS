@@ -3,17 +3,18 @@ const path = require('path');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const { title } = require('process');
-const Person = require('./models/person');
 const session = require('express-session');
-const upload = require('./middleware/upload');
 const bcrypt = require('bcrypt');
+
+const Person = require('./models/person');
+const upload = require('./middleware/upload');
 
 const dbURI = "mongodb+srv://arshia:arshia1234@cluster0.wnrotdp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0"
 
 const app = express();
 
 app.use(session({
-	secret: 'your-secret-key', // یه متن رمز شده دلخواه
+	secret: '@_arshia.coding.hy_@', // یه متن رمز شده دلخواه
 	resave: false,
 	saveUninitialized: true
 }));
@@ -43,6 +44,11 @@ app.get("/", (req, res) => {
 	res.redirect("/login")
 })
 
+app.use((req, res, next) => {
+	res.setHeader('Cache-Control', 'no-store');
+	next();
+  });  
+
 app.get("/register", (req, res) => {
 	res.render("register", { title: "register" })
 })
@@ -51,13 +57,13 @@ app.post('/register', upload.single('avatar'), async (req, res) => {
 	const avatar = req.file ? req.file.filename : null;
 
 	try {
-		const hashedPassword = await bcrypt.hash(password, 10); 
+		const hashedPassword = await bcrypt.hash(password, 10);
 		const person = new Person({ email, password: hashedPassword, avatar });
 		await person.save();
 		res.redirect('/login');
 	} catch (err) {
 		console.log(err);
-		res.status(500).send("خطا در ثبت‌نام");
+		res.status(500).send("server error");
 	}
 });
 
@@ -77,11 +83,24 @@ app.post('/login', async (req, res) => {
 			req.session.user = user;
 			res.redirect('/dashboard');
 		} else {
-			res.send("ایمیل یا رمز اشتباهه");
+			res.send("tray agen");
 		}
 	} catch (err) {
 		console.log(err);
 		res.status(500).send("500");
+	}
+});
+
+app.get('/logout', (req, res) => {
+	if (req.session) {
+		req.session.destroy(err => {
+			if (err) {
+				console.log(err);
+			}
+			res.redirect('/login');
+		});
+	} else {
+		res.redirect('/login');
 	}
 });
 
