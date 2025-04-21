@@ -45,6 +45,8 @@ app.get("/register", (req, res) => {
 app.post('/register', async (req, res) => {
 	const { email, password } = req.body;
 
+	const avatar = req.file.filename;
+
 	try {
 		const person = new Person({ email, password }); // مدلت این باشه
 		await person.save();
