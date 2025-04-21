@@ -1,9 +1,20 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const personSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-  avatar: String,
+const personSchema = new Schema({
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  avatar: {
+    type: String,
+    default: null
+  }
 });
 
-module.exports = mongoose.model('Person', personSchema);
+const Person = mongoose.model('Person', personSchema);
+module.exports = Person;

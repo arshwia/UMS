@@ -6,6 +6,7 @@ const { title } = require('process');
 const Person = require('./models/person');
 const session = require('express-session');
 const upload = require('./middleware/upload');
+const bcrypt = require('bcrypt');
 
 const dbURI = "mongodb+srv://arshia:arshia1234@cluster0.wnrotdp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0"
 
@@ -50,7 +51,8 @@ app.post('/register', upload.single('avatar'), async (req, res) => {
 	const avatar = req.file ? req.file.filename : null;
 
 	try {
-		const person = new Person({ email, password, avatar });
+		const hashedPassword = await bcrypt.hash(password, 10); 
+		const person = new Person({ email, password: hashedPassword, avatar });
 		await person.save();
 		res.redirect('/login');
 	} catch (err) {
@@ -69,8 +71,9 @@ app.post('/login', async (req, res) => {
 	const { email, password } = req.body;
 
 	try {
-		const user = await Person.findOne({ email, password });
-		if (user) {
+		const user = await Person.findOne({ email });
+
+		if (user && await bcrypt.compare(password, user.password)) {
 			req.session.user = user;
 			res.redirect('/dashboard');
 		} else {
